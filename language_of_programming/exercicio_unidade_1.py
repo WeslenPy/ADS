@@ -35,7 +35,7 @@ def calcular_media(lista_de_notas:list[float]):
     
     ''' usa o built-in sum para somar todos os itens contidos 
         dentro de lista_de_notas e depois divide pela quantidade de notas  '''
-    return sum(lista_de_notas)//len(lista_de_notas)
+    return sum(lista_de_notas)/len(lista_de_notas)
 
 
 print("---- Sistema de gestão de notas! ----")
