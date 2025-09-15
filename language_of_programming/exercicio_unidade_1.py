@@ -111,7 +111,7 @@ for aluno,notas in alunos_e_notas.items():
         media = calcular_media(notas)
     
         #mostra os dados no output
-        print(f"\no aluno(a) {aluno} teve média: {media} e foi : {'REPROVADO' if media<7 else 'APROVADO'}")
+        print(f"\nO aluno(a) {aluno} teve média: {media} e foi : {'REPROVADO' if media<7 else 'APROVADO'}")
         
     else:
         print(f"Não foram adicionadas notas suficiente para o aluno(a) {aluno}: REPROVADO ")
