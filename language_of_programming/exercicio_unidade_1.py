@@ -11,8 +11,8 @@ running = True
 
 
 # Função responsavel por validar a entrada e verificar se esta em branco ou se é igual a y
-def valida_pergunta(value:str):
-    return True if  len(value.strip())==0 or value.lower().strip()[0] == "y" else False
+def valida_resposta(resposta:str):
+    return True if  len(resposta.strip())==0 or resposta.lower().strip()[0] == "y" else False
 
 
 # Função responsavel por validar a entrada e verificar se é um digito
@@ -35,7 +35,7 @@ def calcular_media(lista_de_notas:list[float]):
     
     ''' usa o built-in sum para somar todos os itens contidos 
         dentro de lista_de_notas e depois divide pela quantidade de notas  '''
-    return sum(lista_de_notas)/len(lista_de_notas)
+    return round(sum(lista_de_notas)/len(lista_de_notas),2)
 
 
 print("---- Sistema de gestão de notas! ----")
@@ -67,33 +67,36 @@ while running:
         
         
             #recebe como entrada uma string nova_nota    
-            nova_nota = input(f"\nDigite a nota que será adicionada para o aluno {nome_aluno}: ").strip()
+            nova_nota = input(f"\nDigite a nota que será adicionada para o aluno {nome_aluno} de 0 a 10: ").strip()
             
             
             #armazena o resultado da funcao valida_entrada_de_notas
-            nota_verificada =  valida_entrada_de_notas(nova_nota)
-            
+            verifica_nota =  valida_entrada_de_notas(nova_nota)
             
             # verifica se o resultado da funcao é None, ou seja, se deu erro na validação.
-            if nota_verificada is None:
+            if verifica_nota is None:
                 print("Nota inserida é inválida, preencha apenas com digitos")
                 continue
-     
+            
+            # verifica se verifica_nota esta dentro do range esperado A.
+            if verifica_nota >10 or verifica_nota <0:
+                print("Insira uma nota de 0 a 10")
+                continue
             
             # adiciona a nova nota ao aluno respectivo
-            alunos_e_notas[nome_aluno].append(nota_verificada)
+            alunos_e_notas[nome_aluno].append(verifica_nota)
             print("\nNota adicionada com sucesso!")
             
             
             #Verifica se o usuario gostaria de adicionar uma nova nota
             quest_more_notas = input(f"\nDeseja adicionar mais notas ao aluno {nome_aluno} ?[Y/n]")
-            if not valida_pergunta(quest_more_notas):
+            if not valida_resposta(quest_more_notas):
                 print("Finalizando adição de notas ...")
                 break
             
         #Verifica se o usuario gostaria de adicionar um novo aluno
         quest_more = input(f"\nDeseja adicionar mais alunos ?[Y/n] ")
-        if not valida_pergunta(quest_more):
+        if not valida_resposta(quest_more):
             print("Finalizando adição de alunos...")
             running = False
             break
@@ -103,15 +106,25 @@ while running:
         break
     
 
+
+
+print("\n*** Relatorio de todos os alunos *** \n")
 for aluno,notas in alunos_e_notas.items():
     
-    # calcula a media do aluno com base na lista de notas
+    print(f"ALUNO: {aluno}")
+    print(f"NOTAS: {notas}")
     
     if len(notas)>0:
+        # calcula a media do aluno com base na lista de notas
         media = calcular_media(notas)
-    
-        #mostra os dados no output
-        print(f"\nO aluno(a) {aluno} teve média: {media} e foi : {'REPROVADO' if media<7 else 'APROVADO'}")
+
+        #verifica a situacao do aluno e armazena em situacao_aluno            
+        situacao_aluno = 'REPROVADO' if media<7 else 'APROVADO'
+        #mostra os dados do relatorio
+        print(f"MEDIA: {media}")
+        print(f"SITUACAO: {situacao_aluno}\n\n")
         
     else:
-        print(f"Não foram adicionadas notas suficiente para o aluno(a) {aluno}: REPROVADO ")
+        print(f"MEDIA: {0}")
+        print(f"SITUACAO: REPROVADO\n\n")
+        
