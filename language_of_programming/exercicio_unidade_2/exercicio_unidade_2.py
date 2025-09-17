@@ -32,7 +32,7 @@ class Livro:
     def titulo_match(self,titulo:str)->bool:
         return True if titulo.lower() in self.titulo.lower() else False
     
-    # formatacao de saida
+    # formatação de saida
     def saida_formatada(self)->str:
         return  f"Livro: {self.titulo} \
                   \n - Autor:{self.autor} \
@@ -44,7 +44,7 @@ class Livro:
     def __repr__(self)->str:
         return self.saida_formatada()
     
-    #permite que a classe ao ser chamada dentro do print a saida seja formatada com a funcao saida_formatada
+    #permite que a classe ao ser chamada dentro do print a saida seja formatada com a função saida_formatada
     def __str__(self)->str:
         return  self.saida_formatada()
     
@@ -61,30 +61,30 @@ class Biblioteca:
         ]
         
         
-    #funcao que abstrai a listagem de livros
+    #função que abstrai a listagem de livros
     def listar_livros(self,livros:list[Livro]):
         nova_lista_de_livros = [livro.saida_formatada() for livro in list(livros)]
         print("\n".join(nova_lista_de_livros))
         
-    #funcao para mostrar todos os livros disponiveis 
+    #função para mostrar todos os livros disponiveis 
     def listar_todos_os_livros(self):
         # lista todos os livros encontrados
         print("Listando todos os livros cadastrados: ")
         self.listar_livros(self.lista_de_livros)
         
         
-    #funcao para cadatrar novos livros
+    #função para cadastrar novos livros
     def cadastrar_livro(self,livro:Livro):
         print(f"Novo livro adicionado com sucesso: {livro.titulo}")
         self.lista_de_livros.append(livro)
         
         
-    #funcao para cadatrar novos multiplos livros de uma unica vez
+    #função para cadastrar novos multiplos livros de uma unica vez
     def cadastrar_multiplos_livros(self,livros:list[Livro]):
         self.lista_de_livros.extend(livros)
         
     
-    #funcao para buscar/filtrar livros com base no titulo
+    #função para buscar/filtrar livros com base no titulo
     def buscar_livro_pelo_titulo(self,titulo:str):
         #filtra os dados usando o built-in filter e uma função lambda 
         livros_encontrados = filter(lambda livro: livro.titulo_match(titulo),self.lista_de_livros)
@@ -96,7 +96,7 @@ class Biblioteca:
    
     
     
-    #funcao que gerar o grafico de barrar usando a lib matplotlib
+    #função que gerar o grafico de barrar usando a lib matplotlib
     def plot_dados(self):
         
         #cria um dicionario para armazenar os dados que serão usados no grafico
@@ -152,7 +152,7 @@ biblioteca = Biblioteca()
 for livro in livros_data:
     #cadastra todos os livros da base inicial
     
-    biblioteca.cadastrar_livro(Livro(**livro))#aqui foi ultilizado tambem o packing do python usando **
+    biblioteca.cadastrar_livro(Livro(**livro))#aqui foi ultilizado também o packing do python usando **
 
 #biblioteca.listar_todos_os_livros()
     
