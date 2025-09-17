@@ -81,6 +81,8 @@ resultados.
 * Finalize o exercício com uma breve análise dos insights obtidos e sugestões para a empresa com base nos dados analisados.
 
 
+## Tipos de graficos
+
 1. Evolução temporal (linha ou área)
 
     * data_venda no eixo X e valor_venda no Y.
