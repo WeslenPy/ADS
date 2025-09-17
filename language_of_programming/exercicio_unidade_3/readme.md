@@ -1,4 +1,4 @@
-# ATIVIDADE PROPOSTA:
+# ATIVIDADE PROPOSTA
 
 Você trabalha em uma empresa de varejo e precisa analisar os dados de vendas do último ano
 para identificar padrões e insights para melhorar o desempenho. Os dados estão armazenados
@@ -29,7 +29,7 @@ cursor = conexao.cursor()
 
 ```python
 cursor.execute('''
-CREATE TABLE vendas1 (
+CREATE TABLE IF NOT EXISTS vendas1 (
 id_venda INTEGER PRIMARY KEY AUTOINCREMENT,
 data_venda DATE,
 produto TEXT,
