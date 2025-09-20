@@ -79,8 +79,8 @@ class Dados:
     def evolucao_temporal(self):
         plt.figure(figsize=(10,5))
 
-        #define os dados que serão plotados no grafico,
-        # de barras sendo eles a data_venda e valor_venda respectivamente
+        #define os dados que serão plotados no grafico de barras,
+        #  sendo eles a data_venda e valor_venda respectivamente
         plt.plot(self.df['data_venda'], self.df['valor_venda'], marker='o')  
         
         # define a label do eixo X
@@ -164,4 +164,9 @@ dados = Dados(db=db)
 dados.head()
 
 # gera um grafico com o ticket medio mensal 
-dados.ticket_medio_mensal()
+# dados.ticket_medio_mensal()
+# dados.ranking_de_produtos()
+# dados.distribuicao_por_categoria()
+dados.evolucao_temporal()
+
+dados.show()
