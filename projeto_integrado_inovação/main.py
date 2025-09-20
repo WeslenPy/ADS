@@ -57,7 +57,9 @@ class Paciente(Pessoa):
     
 class Clinica:
     def __init__(self):
-        pass
+        self.pacientes:list[Paciente] = [
+            
+        ]
 
     
     def cadastrar_paciente(self):
