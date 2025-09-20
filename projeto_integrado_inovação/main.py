@@ -1,5 +1,6 @@
-from logging import info
 import os,sys
+import re
+from time import sleep
 
 class Utils:
     
@@ -7,8 +8,9 @@ class Utils:
         pass
     
     
-    def validar_telefone(self):
-        pass
+    def validar_telefone(self,value:str)->bool:
+        pattern=   re.compile(r"^\(\d{2}\)\s?\d{4,5}-\d{4}$")# exemplo (11) 99999-8888
+        return bool(pattern.match(value))
     
     def validar_nome(self):
         pass
@@ -23,21 +25,27 @@ class Utils:
         except Exception as erro:
             return False
     
+    def montar_menu(self,map_menu:dict[str,dict]):
+        return "\n".join(map(lambda items:f"{items[0]}. {items[1]['title']}",list(map_menu.items())))
     
-    def limpar_terminal(self):
+    
+    def limpar_terminal(self)->None:
         if os.name == "nt":#windows
             os.system("cls")
         else:
             os.system("clear")
 
+
+    def next_step(self)->str:
+        return input("\nPrecione enter para continuar....")
     
 class Pessoa:
     nome_completo:str
     idade:str
     
-    def __init__(self,nome_completo,idade):
-        self.nome_completo = nome_completo
-        self.idade = idade
+    def __init__(self,nome_completo:str,idade:int):
+        self.nome_completo = nome_completo.strip().title()
+        self.idade = int(idade)
 
 
 
@@ -49,31 +57,125 @@ class Paciente(Pessoa):
     
     telefone:str
     
-    def __init__(self,telefone,nome_completo,idade):
+    def __init__(self,telefone:str,nome_completo:str,idade:int):
         super().__init__(nome_completo,idade)
         
         self.telefone= telefone
+        
+        
+    def nome_match(self,nome:str)->bool:
+        return True if nome.lower() in self.nome_completo.strip().lower() else False
+    
+        
+    def saida_formatada(self)->str:
+        
+        return f"""
+            \n\nNome do paciente: {self.nome_completo}\
+            \nIdade: {self.idade}\
+            \nTelefone: {self.telefone}\
+            """
+    
+    def __repr__(self)->str:
+        return self.saida_formatada()
     
     
-class Clinica:
+    def __str___(self)->str:
+        return self.saida_formatada()
+     
+class Clinica(Utils):
     def __init__(self):
+        
+        
         self.pacientes:list[Paciente] = [
             
         ]
-
+        
+        
+    def cadastrar_paciente(self,nome:str,idade:str,telefone:str)->None:
+        novo_paciente = Paciente(telefone=telefone,
+                                       nome_completo=nome,
+                                       idade=idade)
+        self.pacientes.append(novo_paciente) 
+        
+        print("\nPaciente cadastrado com sucesso!") 
+        return novo_paciente
     
-    def cadastrar_paciente(self):
-        pass
-
+    def pre_cadastro_do_paciente(self)->None:
+        
+        step = 0
+        
+        self.limpar_terminal()
+        
+        print("\n--- Cadastro de paciente ---\n")
+        while step <=2:
+            
+            if step == 0:
+                nome = input("Nome do paciente: ").strip()
+                if len(nome)<=1:
+                    print("Nome incorreto, preencha com um nome valido!")
+                    continue
+                else:
+                    step+=1
+                    
+            if step ==1:
+                idade = input("Idade: ").strip()
+                if not self.validar_entrada(idade):
+                    print("Idade invalida, preencha com uma idade valida!")
+                    continue
+                
+                else:
+                    step+=1
+                
+                
+            if step == 2:
+                telefone = input("Telefone: ").strip()
+                if not self.validar_telefone(telefone):
+                    print("Telefone invalido, preencha com um telefone valido, exemplo esperado: (11) 99999-8888" )
+                    
+                    continue
+                
+                else:
+                    step+=1
+                    
+                    
+                    
+            self.cadastrar_paciente(nome,idade,telefone)
+            self.next_step()
+            
 
     def ver_estatisticas(self):
         pass
     
-    def buscar_paciente(self):
-        pass
+    def buscar_paciente(self,nome:str):
+        pacientes_encontrados = filter(lambda paciente: paciente.nome_match(nome),self.pacientes)
+        self.listar_pacientes(pacientes_encontrados)
+        
+        return pacientes_encontrados
     
+    
+    def pre_buscar_paciente(self,nome:str):
+        
+        paciente = ""
+        while not paciente:
+            paciente = input("Digite o nome do paciente que deseja buscar: ")
+            
+        self.buscar_paciente(paciente)
+        self.next_step()        
+    
+    def listar_pacientes(self,pacientes:list[Paciente]):
+        if not pacientes:
+            print("Nenhum paciente cadastrado.")
+            return 
+        
+        
+        for paciente in pacientes:
+            print(paciente)
+        
     def listar_todos_os_pacientes(self):
-        pass
+        self.limpar_terminal()
+        print("--- Listagem de pacientes ---")
+        self.listar_pacientes(self.pacientes)
+        self.next_step()
     
 
 
@@ -85,8 +187,8 @@ class Menu:
         self.utils = Utils()
         
         
-        self.map_menus = {
-            "1": {"title":"Cadastrar pacientes","function":self.clinica.cadastrar_paciente} ,
+        self.map_menu = {
+            "1": {"title":"Cadastrar pacientes","function":self.clinica.pre_cadastro_do_paciente} ,
             "2": {"title":"Ver estatísticas","function":self.clinica.ver_estatisticas} ,
             "3": {"title":"Buscar paciente","function":self.clinica.buscar_paciente} ,
             "4": {"title":"Listar todos os pacientes","function":self.clinica.listar_todos_os_pacientes} ,
@@ -94,15 +196,11 @@ class Menu:
         }
         
         
-        self.menu_montado  = self.montar_menu()
-        
-    def montar_menu(self):
-        return "\n".join(map(lambda items:f"{items[0]}. {items[1]['title']}",list(self.map_menus.items())))
-    
-    
+        self.menu_montado  = self.utils.montar_menu(self.map_menu)
+  
     def call_op(self,op:str):
-        if(str(op) in self.map_menus):
-            menu_function =  self.map_menus.get(op,{})
+        if(str(op) in self.map_menu):
+            menu_function =  self.map_menu.get(op,{})
             return menu_function.get("function",self.sair)()
         
         return None
@@ -111,10 +209,12 @@ class Menu:
     def show(self):
         
         while True:
+            self.utils.limpar_terminal()
             print(self.menu_montado)
             op_escolhida = input("\nEscolha uma opção: ").strip()
             if not self.utils.validar_entrada(op_escolhida):
                 print("Escolha uma opção valida.")
+                continue
                 
             
             self.call_op(op_escolhida)                

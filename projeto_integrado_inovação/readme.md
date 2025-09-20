@@ -75,11 +75,11 @@ Paciente cadastrado com sucesso!
 
 ## 🏗️ Estrutura do Sistema
 - [x] Criar menu principal
-- [ ] Implementar cadastro de pacientes
+- [x] Implementar cadastro de pacientes
 - [ ] Implementar estatísticas básicas
-- [ ] Implementar busca por nome
-- [ ] Implementar listagem de pacientes
-- [ ] Tratar erros de entrada
+- [x] Implementar busca por nome
+- [x] Implementar listagem de pacientes
+- [x] Tratar erros de entrada
 
 ## 📊 Estatísticas
 - [ ] Mostrar número total de pacientes
