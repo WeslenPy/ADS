@@ -70,7 +70,7 @@ class Paciente(Pessoa):
     def saida_formatada(self)->str:
         
         return f"""
-            \n\nNome do paciente: {self.nome_completo}\
+            \nNome do paciente: {self.nome_completo}\
             \nIdade: {self.idade}\
             \nTelefone: {self.telefone}\
             """
@@ -147,26 +147,31 @@ class Clinica(Utils):
         pass
     
     def buscar_paciente(self,nome:str):
-        pacientes_encontrados = filter(lambda paciente: paciente.nome_match(nome),self.pacientes)
+        pacientes_encontrados = list(filter(lambda paciente: paciente.nome_match(nome),self.pacientes))
         self.listar_pacientes(pacientes_encontrados)
         
         return pacientes_encontrados
     
     
-    def pre_buscar_paciente(self,nome:str):
+    def pre_buscar_paciente(self):
         
-        paciente = ""
-        while not paciente:
-            paciente = input("Digite o nome do paciente que deseja buscar: ")
+        while True:
+            paciente = input("\nDigite o nome do paciente que deseja buscar: ")
+            if paciente and ( paciente.isdigit() or paciente.isdecimal()):
+                print("Preencha o campo de busca com um nome valido!")
+                continue
             
+            break
+            
+            
+        print("\n--- Pacientes encontrados ---")
         self.buscar_paciente(paciente)
         self.next_step()        
     
     def listar_pacientes(self,pacientes:list[Paciente]):
-        if not pacientes:
-            print("Nenhum paciente cadastrado.")
+        if not pacientes or len(pacientes)<=0:
+            print("Nenhum paciente encontrado.")
             return 
-        
         
         for paciente in pacientes:
             print(paciente)
@@ -190,7 +195,7 @@ class Menu:
         self.map_menu = {
             "1": {"title":"Cadastrar pacientes","function":self.clinica.pre_cadastro_do_paciente} ,
             "2": {"title":"Ver estatísticas","function":self.clinica.ver_estatisticas} ,
-            "3": {"title":"Buscar paciente","function":self.clinica.buscar_paciente} ,
+            "3": {"title":"Buscar paciente","function":self.clinica.pre_buscar_paciente} ,
             "4": {"title":"Listar todos os pacientes","function":self.clinica.listar_todos_os_pacientes} ,
             "5": {"title":"Sair","function":self.sair} ,
         }
