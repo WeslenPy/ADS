@@ -73,19 +73,19 @@ Paciente cadastrado com sucesso!
 
 # ✅ Checklist do Projeto
 
-## 🏗️ Estrutura do Sistema
+## 🏗️ Estrutura do Sistema 
 - [x] Criar menu principal
 - [x] Implementar cadastro de pacientes
-- [ ] Implementar estatísticas básicas
+- [x] Implementar estatísticas básicas
 - [x] Implementar busca por nome
 - [x] Implementar listagem de pacientes
 - [x] Tratar erros de entrada
 
 ## 📊 Estatísticas
-- [ ] Mostrar número total de pacientes
-- [ ] Calcular idade média
-- [ ] Identificar paciente mais novo
-- [ ] Identificar paciente mais velho
+- [x] Mostrar número total de pacientes
+- [x] Calcular idade média
+- [x] Identificar paciente mais novo
+- [x] Identificar paciente mais velho
 
 ## 🔐 Controle de Acesso
 - [ ] Definir variáveis lógicas (A, B, C, D)
@@ -102,5 +102,5 @@ Paciente cadastrado com sucesso!
 
 ## 📦 Entrega
 - [ ] Documentar no README
-- [ ] Subir código para o GitHub
+- [x] Subir código para o GitHub
 - [ ] Revisar checklist antes da entrega

@@ -37,7 +37,7 @@ class Utils:
 
 
     def next_step(self)->str:
-        return input("\nPrecione enter para continuar....")
+        return input("\nPressione enter para continuar....")
     
 class Pessoa:
     nome_completo:str
@@ -138,15 +138,34 @@ class Clinica(Utils):
                     step+=1
                     
                     
-                    
+            
             self.cadastrar_paciente(nome,idade,telefone)
-            self.next_step()
             
 
     def ver_estatisticas(self):
-        pass
+        self.limpar_terminal()
+    
+        total_pacientes = len(self.pacientes)
+        idades_organizadas = sorted(self.pacientes,key=lambda paciente:paciente.idade)
+        
+        idade_media = sum([paciente.idade for paciente in idades_organizadas])//total_pacientes
+        
+        paciente_mais_novo =idades_organizadas[0]
+        paciente_mais_velho = idades_organizadas[-1]
+        
+        print("--- Estatísticas ---")
+        
+        
+        print(f"""\
+              \nNúmero total de pacientes cadastrados: {total_pacientes}\
+              \nIdade média dos pacientes: {idade_media}\
+              \nPaciente mais novo: {paciente_mais_novo.nome_completo} | Idade: {paciente_mais_novo.idade}\
+              \nPaciente mais velho: {paciente_mais_velho.nome_completo} | Idade: {paciente_mais_velho.idade}\
+              """)
+                
     
     def buscar_paciente(self,nome:str):
+        self.limpar_terminal()
         pacientes_encontrados = list(filter(lambda paciente: paciente.nome_match(nome),self.pacientes))
         self.listar_pacientes(pacientes_encontrados)
         
@@ -166,8 +185,8 @@ class Clinica(Utils):
             
         print("\n--- Pacientes encontrados ---")
         self.buscar_paciente(paciente)
-        self.next_step()        
-    
+
+
     def listar_pacientes(self,pacientes:list[Paciente]):
         if not pacientes or len(pacientes)<=0:
             print("Nenhum paciente encontrado.")
@@ -180,7 +199,6 @@ class Clinica(Utils):
         self.limpar_terminal()
         print("--- Listagem de pacientes ---")
         self.listar_pacientes(self.pacientes)
-        self.next_step()
     
 
 
@@ -219,10 +237,12 @@ class Menu:
             op_escolhida = input("\nEscolha uma opção: ").strip()
             if not self.utils.validar_entrada(op_escolhida):
                 print("Escolha uma opção valida.")
+                sleep(1)
                 continue
                 
             
-            self.call_op(op_escolhida)                
+            self.call_op(op_escolhida)             
+            self.utils.next_step()   
     
     
     def sair(self):
