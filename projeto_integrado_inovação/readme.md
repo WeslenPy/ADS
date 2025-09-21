@@ -172,7 +172,7 @@ Paciente cadastrado com sucesso!
 ## Logica Booleana para Consulta Normal e Emergencia
 
 * Expressão booleana
-```markdown
+```text
 Operadores: **AND (∧), OR (∨) e NOT (¬)**
 
 Consulta Normal: **(A ∧ B ∧ C) ∨ (B ∧ C ∧ D)**
