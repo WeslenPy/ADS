@@ -169,6 +169,27 @@ Paciente cadastrado com sucesso!
 - [ ] Incluir diagrama UML no README  
 - [ ] Revisar README antes da entrega  
 
+## Logica Booleana para Consulta Normal e Emergencia
+
+* Expressão booleana
+```
+Operadores: AND (∧), OR (∨) e NOT (¬)
+
+Consulta Normal: (A ∧ B ∧ C) ∨ (B ∧ C ∧ D)
+Emergência: C ∧ (B ∨ D)
+```
+
+* Em python 
+
+```python
+def consulta_normal(a,b,c,d):
+   return  (a and b and c) or (b and c and d)
+
+def emergencia(b,c,d):
+    return c and (b or d)
+    
+```
+
 
 
 ## Tabela verdade 
@@ -253,7 +274,7 @@ FIM
 
 ```
 
-* Usando python
+* FIFO com python
 ```python 
 # logica de algoritmo FIFO simples
 
