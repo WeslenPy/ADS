@@ -1,0 +1,24 @@
+
+// logica de algoritmo FIFO simples
+INÍCIO
+    CRIAR fila_vazia
+
+    // Inserir 3 pacientes
+    PARA i = 1 ATÉ 3 FAÇA
+        ESCREVA "Digite o nome do paciente:"
+        LER nome
+        ESCREVA "Digite o CPF do paciente:"
+        LER cpf
+        ADICIONE (nome, cpf) NA fila_vazia
+    FIM_PARA
+
+    // Atender o primeiro paciente
+    REMOVA paciente_atendido DE fila_vazia
+    ESCREVA "Paciente atendido:", paciente_atendido
+
+    // Mostrar pacientes restantes
+    ESCREVA "Pacientes restantes na fila:"
+    PARA CADA paciente EM fila_vazia FAÇA
+        ESCREVA paciente
+    FIM_PARA
+FIM

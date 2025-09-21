@@ -135,21 +135,21 @@ Paciente cadastrado com sucesso!
 ---
 
 ## Passo 3 – Controle de Acesso (Lógica Booleana)
-- [ ] Escrever expressão lógica para **Consulta Normal**  
-- [ ] Escrever expressão lógica para **Emergência**  
-- [ ] Construir tabela verdade (16 linhas) para **Consulta Normal**  
-- [ ] Construir tabela verdade (16 linhas) para **Emergência**  
-- [ ] Analisar situações em que há atendimento  
-- [ ] Testar situação prática fornecida  
-- [ ] *(Opcional: Implementar em Python para automatizar)*  
+- [x] Escrever expressão lógica para **Consulta Normal**  
+- [x] Escrever expressão lógica para **Emergência**  
+- [x] Construir tabela verdade (16 linhas) para **Consulta Normal**  
+- [x] Construir tabela verdade (16 linhas) para **Emergência**  
+- [x] Analisar situações em que há atendimento  
+- [x] Testar situação prática fornecida  
+- [x] *(Opcional: Implementar em Python para automatizar)*  
 
 ---
 
 ## Passo 4 – Algoritmo de Fila
-- [ ] Criar pseudocódigo para inserir 3 pacientes  
-- [ ] Implementar remoção do primeiro paciente (atendimento)  
-- [ ] Mostrar pacientes restantes na fila  
-- [ ] *(Opcional: Implementar em Python)*  
+- [x] Criar pseudocódigo para inserir 3 pacientes  
+- [x] Implementar remoção do primeiro paciente (atendimento)  
+- [x] Mostrar pacientes restantes na fila  
+- [x] *(Opcional: Implementar em Python)*  
 
 ---
 
@@ -168,3 +168,114 @@ Paciente cadastrado com sucesso!
 - [ ] Incluir pseudocódigo no README  
 - [ ] Incluir diagrama UML no README  
 - [ ] Revisar README antes da entrega  
+
+
+
+## Tabela verdade 
+
+```python
+
+'''product(
+    [True,False], # aqui eu passo as variações ou seja, cada variavel pode ser True ou False
+    repeat=4 # aqui eu passo a quantidade de variaveis 
+)# essa função me retorna um produto cartesiano contendo todas as variacões, o que gera 16 combinações
+'''
+for a, b, c, d in product([True, False], repeat=4):
+    cn = consulta_normal(a, b, c, d)
+    em = emergencia(b, c, d)
+    
+    if cn:consulta_count +=1
+    if em: emergencia_count+=1
+
+    conv = lambda x: "V" if x else "F"
+    print(f"| {conv(a)} | {conv(b)} | {conv(c)} | {conv(d)} | {conv(cn)} | {conv(em)} |")
+    
+#SAIDA:
+
+| A | B | C | D | CN | Emergência |
+| V | V | V | V | V |      V      |
+| V | V | V | F | V |      V      |
+| V | V | F | V | F |      F      |
+| V | V | F | F | F |      F      |
+| V | F | V | V | F |      V      |
+| V | F | V | F | F |      F      |
+| V | F | F | V | F |      F      |
+| V | F | F | F | F |      F      |
+| F | V | V | V | V |      V      |
+| F | V | V | F | F |      V      |
+| F | V | F | V | F |      F      |
+| F | V | F | F | F |      F      |
+| F | F | V | V | F |      V      |
+| F | F | V | F | F |      F      |
+| F | F | F | V | F |      F      |
+| F | F | F | F | F |      F      |
+```
+
+
+## Analise de atendimentos
+
+```python
+Situações em que há atendimento:
+Consulta Normal: 3 de 16
+Emergência: 6 de 16
+```
+
+
+## Algoritmo FIFO (First-In, First-Out)
+
+
+* Pseudocódigo 
+```
+
+// logica de algoritmo FIFO simples
+INÍCIO
+    CRIAR fila_vazia
+
+    // Inserir 3 pacientes
+    PARA i = 1 ATÉ 3 FAÇA
+        ESCREVA "Digite o nome do paciente:"
+        LER nome
+        ESCREVA "Digite o CPF do paciente:"
+        LER cpf
+        ADICIONE (nome, cpf) NA fila_vazia
+    FIM_PARA
+
+    // Atender o primeiro paciente
+    REMOVA paciente_atendido DE fila_vazia
+    ESCREVA "Paciente atendido:", paciente_atendido
+
+    // Mostrar pacientes restantes
+    ESCREVA "Pacientes restantes na fila:"
+    PARA CADA paciente EM fila_vazia FAÇA
+        ESCREVA paciente
+    FIM_PARA
+FIM
+
+```
+
+* Usando python
+```python 
+# logica de algoritmo FIFO simples
+
+fila_vazia = []
+
+# Inserir 3 pacientes
+for i in range(0,4):
+    nome = input("Digite o nome do paciente:")
+    cpf = input("Digite o CPF do paciente:")
+    
+    fila_vazia.append((nome,cpf))
+    
+    
+
+# Atender o primeiro paciente
+paciente = fila_vazia.pop(0)
+print("Paciente atendido: ",paciente)
+
+
+# Mostrar pacientes restantes
+print("Pacientes restantes na fila:")
+for paciente in fila_vazia:
+    print(paciente)
+
+```
