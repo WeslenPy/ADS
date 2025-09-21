@@ -39,6 +39,12 @@ class Utils:
     def next_step(self)->str:
         return input("\nPressione enter para continuar....")
     
+    
+    
+class ControleDeAcessos:
+    pass
+
+
 class Pessoa:
     nome_completo:str
     idade:str
@@ -48,14 +54,31 @@ class Pessoa:
         self.idade = int(idade)
 
 
-
 class Atendente(Pessoa):
-    def __init__(self, nome_completo,idade):
+    
+    tipo_acesso:str = "atendente"
+    
+    def __init__(self, nome_completo:str,idade:str,
+                        login:str,senha:str):
+        super().__init__(nome_completo,idade)
+        
+        self.login = login
+        self.senha = senha
+
+class Medico(Pessoa):
+    tipo_acesso:str = "medico"
+    def __init__(self, nome_completo:str,idade:str,
+                        login:str,senha:str):
         super().__init__(nome_completo,idade)
 
+        self.login = login
+        self.senha = senha
+        
+        
 class Paciente(Pessoa):
     
     telefone:str
+    tipo_acesso:str = "paciente"
     
     def __init__(self,telefone:str,nome_completo:str,idade:int):
         super().__init__(nome_completo,idade)
@@ -87,6 +110,14 @@ class Clinica(Utils):
         
         
         self.pacientes:list[Paciente] = [
+            
+        ]
+        
+        self.medicos:list[Medico]= [
+            
+        ]
+        
+        self.atendentes:list[Atendente] = [
             
         ]
         
