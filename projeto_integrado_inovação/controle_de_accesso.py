@@ -40,7 +40,7 @@ emergencia_count = 0
 '''product(
     [True,False], # aqui eu passo as variações ou seja, cada variavel pode ser True ou False
     repeat=4 # aqui eu passo a quantidade de variaveis 
-)# essa função me retorna um produto cartesiano contendo todas as variacões, o que gera 16 combinações
+)# essa função me retorna um produto cartesiano contendo todas as variacões, o que gera 16 (2**4) combinações
 '''
 for a, b, c, d in product([True, False], repeat=4):
     cn = consulta_normal(a, b, c, d)

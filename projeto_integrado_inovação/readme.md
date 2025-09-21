@@ -172,11 +172,11 @@ Paciente cadastrado com sucesso!
 ## Logica Booleana para Consulta Normal e Emergencia
 
 * Expressão booleana
-```
-Operadores: AND (∧), OR (∨) e NOT (¬)
+```markdown
+Operadores: **AND (∧), OR (∨) e NOT (¬)**
 
-Consulta Normal: (A ∧ B ∧ C) ∨ (B ∧ C ∧ D)
-Emergência: C ∧ (B ∨ D)
+Consulta Normal: **(A ∧ B ∧ C) ∨ (B ∧ C ∧ D)**
+Emergência: **C ∧ (B ∨ D)**
 ```
 
 * Em python 
