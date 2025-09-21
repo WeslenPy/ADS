@@ -1,6 +1,9 @@
+from time import sleep
 import os,sys
 import re
-from time import sleep
+from typing import Union
+import bcrypt
+
 
 class Utils:
     
@@ -60,19 +63,28 @@ class Atendente(Pessoa):
     
     def __init__(self, nome_completo:str,idade:str,
                         login:str,senha:str):
-        super().__init__(nome_completo,idade)
+        super().__init__(nome_completo=nome_completo,idade=idade)
         
-        self.login = login
-        self.senha = senha
+        self.login = login.strip().replace(" ","_").lower()
+        
+        #https://github.com/pyca/bcrypt/
+        self.senha =  bcrypt.hashpw(password=str.encode(senha), salt=bcrypt.gensalt())
 
-class Medico(Pessoa):
+    def check_pwd(self,senha_entrada):
+        
+        if bcrypt.checkpw(password=str.encode(senha_entrada), 
+                          hashed_password=self.senha):
+            
+            return True
+        
+        return False
+        
+class Medico(Atendente):
     tipo_acesso:str = "medico"
-    def __init__(self, nome_completo:str,idade:str,
-                        login:str,senha:str):
-        super().__init__(nome_completo,idade)
-
-        self.login = login
-        self.senha = senha
+    
+        
+class Admin(Atendente):
+    tipo_acesso:str = "admin"
         
         
 class Paciente(Pessoa):
@@ -109,17 +121,31 @@ class Clinica(Utils):
     def __init__(self):
         
         
+        self.logged = None
+        
+        
         self.pacientes:list[Paciente] = [
             
         ]
         
-        self.medicos:list[Medico]= [
-            
+        
+        self.atendentes_e_medicos:list[Union[Atendente,Medico]] = [
+            Atendente(nome_completo="Weslen",idade=45,login="weslenpy",senha="weslen123")
         ]
         
-        self.atendentes:list[Atendente] = [
-            
-        ]
+        
+        
+    def login(self,login:str,senha:str) -> Atendente | Medico | None:
+        
+        for user in self.atendentes_e_medicos:
+            if user.login==login:
+                if user.check_pwd(senha_entrada=senha):
+                    self.logged= user
+                    return user
+                
+        self.logged = None
+        return None
+        
         
         
     def cadastrar_paciente(self,nome:str,idade:str,telefone:str)->None:
@@ -240,31 +266,83 @@ class Menu:
         self.clinica = Clinica()
         self.utils = Utils()
         
+        self.logged: Atendente | Medico | None = None
         
-        self.map_menu = {
+        
+        
+        self.comum_menu = {
+            "5": {"title":"Sair","function":self.sair}
+        }
+                
+        self.map_menu_atendente = {
             "1": {"title":"Cadastrar pacientes","function":self.clinica.pre_cadastro_do_paciente} ,
             "2": {"title":"Ver estatísticas","function":self.clinica.ver_estatisticas} ,
             "3": {"title":"Buscar paciente","function":self.clinica.pre_buscar_paciente} ,
             "4": {"title":"Listar todos os pacientes","function":self.clinica.listar_todos_os_pacientes} ,
-            "5": {"title":"Sair","function":self.sair} ,
+            **self.comum_menu
+        }
+        
+        self.map_menu_medico = {
+            
+        }
+        
+        self.menu_montado_atendente  = self.utils.montar_menu(self.map_menu_atendente)
+        self.menu_montado_medico  = self.utils.montar_menu(self.map_menu_medico)
+        
+        
+        self.control_access = {
+            Atendente.tipo_acesso: [self.map_menu_atendente,self.menu_montado_atendente],
+            Medico.tipo_acesso: [self.map_menu_medico,self.menu_montado_medico],
         }
         
         
-        self.menu_montado  = self.utils.montar_menu(self.map_menu)
   
-    def call_op(self,op:str):
-        if(str(op) in self.map_menu):
-            menu_function =  self.map_menu.get(op,{})
+    def call_op(self,op:str,mapped_menu:dict[str,dict]):
+        if(str(op) in mapped_menu):
+            menu_function = mapped_menu.get(op,{})
             return menu_function.get("function",self.sair)()
         
         return None
+    
+    
+    def login(self):
+        
+        self.utils.limpar_terminal()
+        print("---- Sistema Login Clinica ---")
+        
+        
+        tentativas = 0
+        max_tentativas = 5
+        
+        while True:
+            
+            if tentativas>=max_tentativas:
+                print('Você excedeu a quantidade de tentativas.')
+                self.sair()
+            
+            login = input("Digite seu login: ")
+            senha = input("Digite sua senha: ")
+            
+            logged = self.clinica.login(login=login,senha=senha)
+            if not logged:
+                tentativas +=1
+                print(f"\nLogin ou senha inválidos, preencha com seu login e senha corretos, você possui {max_tentativas-tentativas} tentativas.\n")
+                continue
+            
+            self.logged: Atendente | Medico = logged
+            return logged
             
             
     def show(self):
         
+        current_menu_mapeado,current_menu_montado,*_ = self.control_access[self.logged.tipo_acesso]
+        
         while True:
             self.utils.limpar_terminal()
-            print(self.menu_montado)
+            
+            print(f"---- Menu Sistema Clinica ({self.logged.tipo_acesso.title()}: {self.logged.login}) ----")
+            print(current_menu_montado)
+            
             op_escolhida = input("\nEscolha uma opção: ").strip()
             if not self.utils.validar_entrada(op_escolhida):
                 print("Escolha uma opção valida.")
@@ -272,15 +350,18 @@ class Menu:
                 continue
                 
             
-            self.call_op(op_escolhida)             
+            self.call_op(op=op_escolhida,mapped_menu=current_menu_mapeado)             
             self.utils.next_step()   
     
     
     def sair(self):
+        print("Fechando sistema...")
+        sleep(2)
         sys.exit(1)
         
         
         
 menu = Menu()
+menu.login()
 menu.show()
     
