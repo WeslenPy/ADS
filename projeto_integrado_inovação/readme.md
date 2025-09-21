@@ -162,10 +162,10 @@ Paciente cadastrado com sucesso!
 ---
 
 ## 🚀 Entrega Final
-- [ ] Subir código Python para o repositório  
+- [x] Subir código Python para o repositório  
 - [ ] Incluir prints do Trello no README  
-- [ ] Incluir tabelas verdade no README ou anexo  
-- [ ] Incluir pseudocódigo no README  
+- [x] Incluir tabelas verdade no README ou anexo  
+- [x] Incluir pseudocódigo no README  
 - [ ] Incluir diagrama UML no README  
 - [ ] Revisar README antes da entrega  
 
@@ -186,8 +186,7 @@ def consulta_normal(a,b,c,d):
    return  (a and b and c) or (b and c and d)
 
 def emergencia(b,c,d):
-    return c and (b or d)
-    
+   return c and (b or d)
 ```
 
 
@@ -199,8 +198,10 @@ def emergencia(b,c,d):
 '''product(
     [True,False], # aqui eu passo as variações ou seja, cada variavel pode ser True ou False
     repeat=4 # aqui eu passo a quantidade de variaveis 
-)# essa função me retorna um produto cartesiano contendo todas as variacões, o que gera 16 combinações
+)# essa função me retorna um produto cartesiano contendo todas as variacões, o que gera 16(2**4) combinações
 '''
+
+print("| A | B | C | D | CN | Emergência |")
 for a, b, c, d in product([True, False], repeat=4):
     cn = consulta_normal(a, b, c, d)
     em = emergencia(b, c, d)
@@ -246,8 +247,7 @@ Emergência: 6 de 16
 
 
 * Pseudocódigo 
-```
-
+```text
 // logica de algoritmo FIFO simples
 INÍCIO
     CRIAR fila_vazia

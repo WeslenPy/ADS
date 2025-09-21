@@ -1,5 +1,10 @@
 from itertools import product
 
+agendamento = False         #A
+documentos = True           #B
+medico_disponivel = True    #C
+pagamentos_atrasados =False #D
+
 #AND (∧), OR (∨) e NOT (¬)
 #Consulta Normal: (A ∧ B ∧ C) ∨ (B ∧ C ∧ D)
 def consulta_normal(a,b,c,d):
@@ -23,10 +28,7 @@ Em caso de consulta normal: não
 
 """
 
-agendamento = False         #A
-documentos = True           #B
-medico_disponivel = True    #C
-pagamentos_atrasados =False #D
+
 
 
 # print(consulta_normal(agendamento,documentos,medico_disponivel,pagamentos_atrasados))
@@ -42,6 +44,33 @@ emergencia_count = 0
     repeat=4 # aqui eu passo a quantidade de variaveis 
 )# essa função me retorna um produto cartesiano contendo todas as variacões, o que gera 16 (2**4) combinações
 '''
+
+
+
+# logica para criar um produto cartesiano booleano
+def produto_cartesiano(conjunto_inicial):
+    
+    #criar uma lista com outra lista dentro
+    resultado = [[]]
+    #iterar sobre o conjunto_inicial
+    for elementos in conjunto_inicial:
+        #a cada iteração uma nova lista é criada com base na lista de elementos e na lista de resultados anterior
+        resultado = [a+[b] for a in resultado for b in elementos]
+        '''
+        "b" recebe a iteração de "elementos", 
+        onde na mesma situação "a" recebe uma iteração de "resultados",
+        onde "a" é uma lista de booleanos, por fim tem uma concatenação de "a+[b]",
+        onde "b" é transformada em uma lista para ser concatenado corretamente com a lista "a"
+        '''
+        
+    return resultado
+
+conjunto_inicial = [[False, True]] * 4  
+
+print(produto_cartesiano(conjunto_inicial))
+
+
+print("| A | B | C | D | CN | Emergência |")
 for a, b, c, d in product([True, False], repeat=4):
     cn = consulta_normal(a, b, c, d)
     em = emergencia(b, c, d)
@@ -54,6 +83,6 @@ for a, b, c, d in product([True, False], repeat=4):
     
     
 # Analisar situações em que há atendimento  
-print("Situações em que há atendimento:")
+print("\nSituações em que há atendimento:")
 print("Consulta Normal:", consulta_count, "de 16")
 print("Emergência:", emergencia_count, "de 16")
