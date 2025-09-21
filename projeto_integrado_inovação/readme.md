@@ -169,14 +169,14 @@ Paciente cadastrado com sucesso!
 - [ ] Incluir diagrama UML no README  
 - [ ] Revisar README antes da entrega  
 
-## Logica Booleana para Consulta Normal e Emergencia
+## Logica Booleana para Consulta Normal e Emergência
 
 * Expressão booleana
-```markdown
-Operadores: **AND (∧), OR (∨) e NOT (¬)**
+```text
+Operadores: AND (∧), OR (∨) e NOT (¬)
 
-Consulta Normal: **(A ∧ B ∧ C) ∨ (B ∧ C ∧ D)**
-Emergência: **C ∧ (B ∨ D)**
+Consulta Normal: (A ∧ B ∧ C) ∨ (B ∧ C ∧ D)
+Emergência: C ∧ (B ∨ D)
 ```
 
 * Em python 
