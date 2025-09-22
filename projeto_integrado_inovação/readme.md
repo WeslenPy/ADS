@@ -1,3 +1,4 @@
+
 # Situação Problema: Desenvolvimento de uma Plataforma de Saúde
 
 
@@ -303,5 +304,4 @@ for paciente in fila_vazia:
 
 
 ## Diagrama UML com casos de uso
-
-![Diagrama de casos de uso do sistema](./uml.png)
+![Diagrama de casos de uso do sistema](https://github.com/user-attachments/assets/c9237378-9621-4ed4-9263-a2314bdd95a2)
