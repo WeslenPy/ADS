@@ -154,10 +154,10 @@ Paciente cadastrado com sucesso!
 ---
 
 ## Passo 5 – Diagrama de Casos de Uso
-- [ ] Identificar atores (Secretária, Médico, Paciente)  
-- [ ] Definir funcionalidades (cadastrar, agendar, confirmar, cancelar, gerar receita, imprimir receita)  
-- [ ] Criar diagrama UML de Casos de Uso  
-- [ ] Inserir imagem do diagrama no README  
+- [x] Identificar atores (Secretária, Médico, Paciente)  
+- [x] Definir funcionalidades (cadastrar, agendar, confirmar, cancelar, gerar receita, imprimir receita)  
+- [x] Criar diagrama UML de Casos de Uso  
+- [x] Inserir imagem do diagrama no README  
 
 ---
 
@@ -300,3 +300,8 @@ for paciente in fila_vazia:
     print(paciente)
 
 ```
+
+
+## Diagrma UML com casos de uso
+
+![Diagrama de casos de uso do sistema](./uml.png)
