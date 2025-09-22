@@ -1,4 +1,4 @@
-![uml](https://github.com/user-attachments/assets/c9237378-9621-4ed4-9263-a2314bdd95a2)
+
 # Situação Problema: Desenvolvimento de uma Plataforma de Saúde
 
 
@@ -304,5 +304,4 @@ for paciente in fila_vazia:
 
 
 ## Diagrma UML com casos de uso
-
-![Diagrama de casos de uso do sistema](/assets/images/uml.png)
+![Diagrama de casos de uso do sistema](https://github.com/user-attachments/assets/c9237378-9621-4ed4-9263-a2314bdd95a2)
