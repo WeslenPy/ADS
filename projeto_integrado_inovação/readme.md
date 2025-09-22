@@ -302,6 +302,6 @@ for paciente in fila_vazia:
 ```
 
 
-## Diagrma UML com casos de uso
+## Diagrama UML com casos de uso
 
 ![Diagrama de casos de uso do sistema](./uml.png)
